@@ -53,7 +53,7 @@ uploadArchives {
         pom.artifactId = 'dicelib';
         pom.groupId = 'net.rptools.dicelib';
         configuration = configurations.deployerJars;
-        repository url: 'file://' + buildDir + '/maven-repo'
+        repository url: 'file://' + projectDir + '/../maven-repo'
     }
 }
 
