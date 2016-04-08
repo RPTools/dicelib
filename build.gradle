@@ -112,7 +112,7 @@ def getVersionName() {
             return tagName
         } else {
             println 'No version specified, please specify version with -Pversion=<version>'
-            throw org.gradle.api.InvalidUserDataException
+            throw new org.gradle.api.InvalidUserDataException('Version not specified, please specify version with -Pversion=<version>')
         }
     }
 }
