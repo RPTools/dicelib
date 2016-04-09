@@ -99,21 +99,13 @@ repositories {
 
 def getVersionName() {
 
+
     if (project.hasProperty('buildVersion')) {
         return buildVersion
     } else {
-        def repo = Grgit.open(project.file('.'))
-        def tagName = repo.tag.list()[0].fullName.replace('refs/tags/', '')
-        def tagCommit = repo.tag.list()[0].commit.id
-        def headCommit = repo.head().id
-        def headAbbrvId = repo.head().abbreviatedId
+        String vtxtVersionNo = new File('build-resources/version.txt').text.trim()
 
-        if (tagCommit == headCommit) {
-            return tagName
-        } else {
-            println 'No version specified, please specify version with -Pversion=<version>'
-            throw new org.gradle.api.InvalidUserDataException('Version not specified, please specify version with -Pversion=<version>')
-        }
+        return vtxtVersionNo
     }
 }
 
