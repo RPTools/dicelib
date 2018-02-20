@@ -7,7 +7,6 @@ import org.ajoberstar.grgit.*
 apply plugin: 'java'
 apply plugin: 'findbugs'
 apply plugin: 'pmd'
-apply plugin: 'application'
 apply plugin: 'maven'
 apply plugin: 'com.diffplug.gradle.spotless'
 
@@ -123,8 +122,10 @@ pmd {
 
 
 
-task showBuildVersion() << {
-    println 'Build Version Number = ' + project.version
+task showBuildVersion() {
+    doLast {
+        println 'Build Version Number = ' + project.version
+    }
 }
 
 jar {
