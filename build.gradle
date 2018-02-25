@@ -34,7 +34,7 @@ configurations {
 
 
 task wrapper(type: Wrapper) {
-    gradleVersion='2.1'
+    gradleVersion='4.5'
 }
 
 install {
