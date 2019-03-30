@@ -1,25 +1,47 @@
-import org.apache.tools.ant.filters.ReplaceTokens
 import java.text.SimpleDateFormat
-import org.ajoberstar.grgit.*
+
+buildscript {
+    dependencies {
+        classpath "com.diffplug.spotless:spotless-plugin-gradle:3.13.0"
+    }
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+// Access Git info from build script
+plugins {
+    id "org.ajoberstar.grgit" version "3.0.0"
+}
 
 
-
-apply plugin: 'java'
+apply plugin: 'java-library'
 apply plugin: 'findbugs'
-apply plugin: 'pmd'
-apply plugin: 'application'
-apply plugin: 'maven'
 apply plugin: 'com.diffplug.gradle.spotless'
 
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 10
+targetCompatibility = 10
 
-if (version == 'unspecified') {
-    version = getVersionName()
+// Custom properties
+ext {
+    // Get tag and commit info from Git to use for version numbering
+    def repo = org.ajoberstar.grgit.Grgit.open(currentDir: file('.'))
+    def head = repo.head()
+    def tags = repo.tag.list().find {
+        it.commit == head
+    }
+
+    if (tags) {
+        tagVersion = tags.getName()
+    }
+
+    revision = head.abbreviatedId
+    revisionFull = head.id
+
+//    println 'Configuring for ' + project.name + " " + tagVersion + " by " + vendor
 }
-
-ext.repo = Grgit.open(project.file('.'))
 
 
 spotless {
@@ -31,44 +53,6 @@ spotless {
 
 configurations {
     deployerJars
-}
-
-
-task wrapper(type: Wrapper) {
-    gradleVersion='2.1'
-}
-
-install {
-    repositories.mavenInstaller {
-        pom.version = project.version;
-        pom.artifactId = 'dicelib';
-        pom.groupId = 'net.rptools.dicelib';
-    }
-}
-
-
-uploadArchives {
-    repositories.mavenDeployer {
-        pom.version = project.version;
-        pom.artifactId = 'dicelib';
-        pom.groupId = 'net.rptools.dicelib';
-        configuration = configurations.deployerJars;
-        repository url: 'file://' + projectDir + '/../maven-repo'
-    }
-}
-
-buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-        maven {
-            url 'https://plugins.gradle.org/m2/'
-        }
-    }
-    dependencies {
-        classpath 'org.ajoberstar:gradle-git:0.11.2'
-        classpath 'com.diffplug.gradle.spotless:spotless:1.3.0-SNAPSHOT'
-    }
 }
 
 
@@ -116,16 +100,7 @@ findbugs {
     sourceSets = []  // Empty source set so it wont run during build/check
 }
 
-pmd {
-    ignoreFailures = true
-    sourceSets = []  // Empty source set so it wont run during tebuild/check
-}
 
-
-
-task showBuildVersion() << {
-    println 'Build Version Number = ' + project.version
-}
 
 jar {
     manifest {
