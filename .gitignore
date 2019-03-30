@@ -1,5 +1,3 @@
-maven-repo/
-
 # OS generated files
 ################################################################################
 .DS_Store
@@ -14,11 +12,21 @@ Thumbs.db
 
 # Others
 ################################################################################
+.gradle
+build/
+/bin/
+target/
+out/
+/releases/
 *.log
 *~
-target/
-build/
-out/
+\${sys:appHome}/
+
+
+# Automatically Generated
+################################################################################
+package/windows/MapTool.iss
+src/main/resources/sentry.properties
 
 
 # IDEs
@@ -31,16 +39,7 @@ out/
 .settings/
 .classpath
 .history
+workbench.xmi
 
-
-# Gradle Wrapper
-.gradle
-!gradle-wrapper.jar
-# Ignore Gradle GUI config
-gradle-app.setting
-
-# Cache of project
-.gradletasknamecache
-
-# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
-# gradle/wrapper/gradle-wrapper.properties
+# Keystore
+build-resources/rptools-keystore
