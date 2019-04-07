@@ -17,12 +17,30 @@ plugins {
 
 
 apply plugin: 'java-library'
-apply plugin: 'findbugs'
 apply plugin: 'com.diffplug.gradle.spotless'
+apply plugin: 'maven'
+
 
 
 sourceCompatibility = 10
 targetCompatibility = 10
+
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven { url = 'http://maptool.craigs-stuff.net/repo/' }
+}
+
+
+
+dependencies {
+    compile 'rhino:js:1.6R5'
+    compile 'antlr:antlr:2.7.6'
+    compile 'net.rptools.parser:parser:1.1.b24'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
 
 // Custom properties
 ext {
@@ -35,6 +53,7 @@ ext {
 
     if (tags) {
         tagVersion = tags.getName()
+        project.version = tagVersion
     }
 
     revision = head.abbreviatedId
@@ -42,64 +61,55 @@ ext {
 
 //    println 'Configuring for ' + project.name + " " + tagVersion + " by " + vendor
 }
-
+group = "net.rptools.dicelib"
 
 spotless {
     java {
-        eclipseFormatFile 'build-resources/eclipse.prefs.formatter.xml'
+        licenseHeaderFile 'spotless.license.java'
+        // Now using the Google Java style guide
+        //eclipse().configFile('build-resources/eclipse.prefs.formatter.xml')
+        googleJavaFormat()
+        // If you get exceptions thrown by spotlessApply, this might
+        // help.  Enable it here if the problem is with a Java file, and
+        // below if it is not.  Don't leave it enabled, as nothing will
+        // actually be updated if you do.
+        // https://github.com/diffplug/spotless/blob/master/PADDEDCELL.md
+        //paddedCell()
+    }
+
+    format 'misc', {
+        target '**/*.gradle', '**/.gitignore'
+
+        // spotless has built-in rules for most basic formatting tasks
+        trimTrailingWhitespace()
+        // or spaces. Takes an integer argument if you don't like 4
+        indentWithSpaces(4)
+        //paddedCell()
     }
 }
-
 
 configurations {
     deployerJars
 }
 
-
-dependencies {
-    compile 'rhino:js:1.6R5'
-    compile 'antlr:antlr:2.7.6'
-    compile 'net.rptools.parser:parser:1.1.b24'
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-    deployerJars 'org.apache.maven.wagon:wagon-ssh:2.2'
-}
-
-ext.compileDate = new Date();
-ext.yyyymmdd = (new SimpleDateFormat('yyyyMMDD')).format(ext.compileDate);
-
-
-repositories {
-    mavenCentral()
-    mavenLocal()
-    maven {
-        url = 'http://maptool.craigs-stuff.net/repo/'
+install {
+    repositories.mavenInstaller {
+        pom.version = project.version;
+        pom.artifactId = 'dicelib';
+        pom.groupId = 'net.rptools.dicelib';
     }
 }
 
 
-/*
- * Gets the version name from the latest Git tag
- */
-
-def getVersionName() {
-
-
-    if (project.hasProperty('buildVersion')) {
-        return buildVersion
-    } else {
-        String vtxtVersionNo = new File('build-resources/version.txt').text.trim()
-
-        return vtxtVersionNo
+uploadArchives {
+    repositories.mavenDeployer {
+        pom.version = project.version;
+        pom.artifactId = 'dicelib';
+        pom.groupId = 'net.rptools.dicelib';
+        configuration = configurations.deployerJars;
+        repository url: 'file://' + projectDir + '/../maven-repo'
     }
 }
-
-findbugs {
-    ignoreFailures = true
-    toolVersion = '3.0.0'
-    effort = 'max'
-    sourceSets = []  // Empty source set so it wont run during build/check
-}
-
 
 
 jar {
