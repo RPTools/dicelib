@@ -12,25 +12,3 @@
  * <http://www.gnu.org/licenses/> and specifically the Affero license
  * text at <http://www.gnu.org/licenses/agpl.html>.
  */
-package net.rptools.common.expression.function;
-
-import java.math.BigDecimal;
-import java.util.List;
-import net.rptools.parser.Parser;
-import net.rptools.parser.function.AbstractFunction;
-import net.rptools.parser.function.EvaluationException;
-
-public class If extends AbstractFunction {
-
-  public If() {
-    super(3, 3, false, "if");
-  }
-
-  @Override
-  public Object childEvaluate(Parser parser, String functionName, List<Object> parameters)
-      throws EvaluationException {
-    if (BigDecimal.ZERO.equals((BigDecimal) parameters.get(0))) return parameters.get(2);
-
-    return parameters.get(1);
-  }
-}
