@@ -37,7 +37,7 @@ repositories {
 
 
 dependencies {
-    compile 'rhino:js:1.6R5'
+    compile 'rhino:js:1.7R2'
     compile 'antlr:antlr:2.7.6'
 //    compile 'net.rptools.parser:parser:1.1.b24'
     implementation 'com.github.RPTools:parser:1.5.5'
