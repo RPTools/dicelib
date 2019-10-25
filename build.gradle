@@ -41,7 +41,7 @@ dependencies {
     compile 'antlr:antlr:2.7.6'
 //    compile 'net.rptools.parser:parser:1.1.b24'
     implementation 'com.github.RPTools:parser:1.5.5'
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
 // Custom properties
