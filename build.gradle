@@ -12,7 +12,7 @@ buildscript {
 
 // Access Git info from build script
 plugins {
-    id "org.ajoberstar.grgit" version "3.0.0"
+    id "org.ajoberstar.grgit" version "3.1.1"
 }
 
 
