@@ -2,7 +2,7 @@ import java.text.SimpleDateFormat
 
 buildscript {
     dependencies {
-        classpath "com.diffplug.spotless:spotless-plugin-gradle:3.13.0"
+        classpath "com.diffplug.spotless:spotless-plugin-gradle:3.28.0"
     }
 
     repositories {
