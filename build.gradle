@@ -16,18 +16,17 @@ plugins {
 
 apply plugin: 'java-library'
 apply plugin: 'com.diffplug.gradle.spotless'
-apply plugin: 'maven'
 
 
-project.sourceCompatibility = 10
-project.targetCompatibility = 10
+project.sourceCompatibility = 16
+project.targetCompatibility = 16
 
 
 // In this section you declare where to find the dependencies of your project
 repositories {
     mavenCentral()
     mavenLocal()
-    maven { url = 'http://maptool.craigs-stuff.net/repo/' }
+    maven { url = 'https://maptool.craigs-stuff.net/repo/' }
     maven { url = 'https://jitpack.io' }
 }
 
@@ -82,29 +81,6 @@ spotless {
         // or spaces. Takes an integer argument if you don't like 4
         indentWithSpaces(4)
         //paddedCell()
-    }
-}
-
-configurations {
-    deployerJars
-}
-
-install {
-    repositories.mavenInstaller {
-        pom.version = project.version
-        pom.artifactId = 'dicelib'
-        pom.groupId = 'net.rptools.dicelib'
-    }
-}
-
-
-uploadArchives {
-    repositories.mavenDeployer {
-        pom.version = project.version
-        pom.artifactId = 'dicelib'
-        pom.groupId = 'net.rptools.dicelib'
-        configuration = configurations.deployerJars
-        repository url: 'file://' + projectDir + '/../maven-repo'
     }
 }
 
