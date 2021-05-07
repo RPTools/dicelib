@@ -1,6 +1,6 @@
 buildscript {
     dependencies {
-        classpath "com.diffplug.spotless:spotless-plugin-gradle:3.26.1"
+        classpath "com.diffplug.spotless:spotless-plugin-gradle:5.12.4"
     }
 
     repositories {
@@ -10,7 +10,7 @@ buildscript {
 
 // Access Git info from build script
 plugins {
-    id "org.ajoberstar.grgit" version "4.0.1"
+    id "org.ajoberstar.grgit" version "4.1.0"
 }
 
 
@@ -34,8 +34,8 @@ repositories {
 dependencies {
     implementation 'rhino:js:1.6R5'
     implementation 'antlr:antlr:2.7.6'
-    implementation 'com.github.RPTools:parser:1.8.2'
-    testImplementation group: 'junit', name: 'junit', version: '4.11'
+    implementation 'com.github.RPTools:parser:1.8.3'
+    testImplementation group: 'junit', name: 'junit', version: '4.13.2'
 }
 
 // Custom properties
