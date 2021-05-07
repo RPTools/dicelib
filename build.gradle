@@ -1,33 +1,24 @@
-buildscript {
-    dependencies {
-        classpath "com.diffplug.spotless:spotless-plugin-gradle:5.12.4"
-    }
-
-    repositories {
-        mavenCentral()
-    }
-}
-
 // Access Git info from build script
 plugins {
     id "org.ajoberstar.grgit" version "4.1.0"
+    id "com.diffplug.spotless" version "5.0.0"
 }
 
 
 apply plugin: 'java-library'
-apply plugin: 'com.diffplug.gradle.spotless'
-apply plugin: 'maven'
+apply plugin: 'com.diffplug.spotless'
 
 
-project.sourceCompatibility = 10
-project.targetCompatibility = 10
+
+project.sourceCompatibility = 16
+project.targetCompatibility = 16
 
 
 // In this section you declare where to find the dependencies of your project
 repositories {
     mavenCentral()
     mavenLocal()
-    maven { url = 'http://maptool.craigs-stuff.net/repo/' }
+    maven { url = 'https://maptool.craigs-stuff.net/repo/' }
     maven { url = 'https://jitpack.io' }
 }
 
@@ -82,29 +73,6 @@ spotless {
         // or spaces. Takes an integer argument if you don't like 4
         indentWithSpaces(4)
         //paddedCell()
-    }
-}
-
-configurations {
-    deployerJars
-}
-
-install {
-    repositories.mavenInstaller {
-        pom.version = project.version
-        pom.artifactId = 'dicelib'
-        pom.groupId = 'net.rptools.dicelib'
-    }
-}
-
-
-uploadArchives {
-    repositories.mavenDeployer {
-        pom.version = project.version
-        pom.artifactId = 'dicelib'
-        pom.groupId = 'net.rptools.dicelib'
-        configuration = configurations.deployerJars
-        repository url: 'file://' + projectDir + '/../maven-repo'
     }
 }
 
