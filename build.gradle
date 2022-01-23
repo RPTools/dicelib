@@ -10,8 +10,8 @@ apply plugin: 'com.diffplug.spotless'
 
 
 
-project.sourceCompatibility = 16
-project.targetCompatibility = 16
+project.sourceCompatibility = 17
+project.targetCompatibility = 17
 
 // In this section you declare where to find the dependencies of your project
 repositories {
