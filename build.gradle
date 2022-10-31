@@ -13,6 +13,7 @@ plugins {
 
 apply plugin: 'java-library'
 apply plugin: 'com.diffplug.spotless'
+apply plugin: 'maven-publish'
 
 
 
@@ -23,7 +24,6 @@ project.targetCompatibility = 17
 repositories {
     mavenCentral()
     mavenLocal()
-    maven { url = 'https://maptool.craigs-stuff.net/repo/' }
     maven { url = 'https://jitpack.io' }
 }
 
