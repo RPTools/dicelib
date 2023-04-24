@@ -29,7 +29,7 @@ repositories {
 
 
 dependencies {
-    implementation 'rhino:js:1.6R5'
+    implementation 'rhino:js:1.7R2'
     implementation 'antlr:antlr:2.7.6'
     implementation 'com.github.RPTools:parser:1.8.3'
     testImplementation group: 'junit', name: 'junit', version: '4.13.2'
