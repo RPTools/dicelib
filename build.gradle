@@ -7,7 +7,7 @@ buildscript {
 // Access Git info from build script
 plugins {
     id "org.ajoberstar.grgit" version "4.1.1"
-    id "com.diffplug.spotless" version "5.0.0"
+    id "com.diffplug.spotless" version "6.18.0"
 }
 
 
@@ -17,8 +17,8 @@ apply plugin: 'maven-publish'
 
 
 
-project.sourceCompatibility = 17
-project.targetCompatibility = 17
+project.sourceCompatibility = 20
+project.targetCompatibility = 20
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -61,7 +61,7 @@ spotless {
         licenseHeaderFile 'spotless.license.java'
         // Now using the Google Java style guide
         //eclipse().configFile('build-resources/eclipse.prefs.formatter.xml')
-        googleJavaFormat()
+        googleJavaFormat("1.16.0")
         // If you get exceptions thrown by spotlessApply, this might
         // help.  Enable it here if the problem is with a Java file, and
         // below if it is not.  Don't leave it enabled, as nothing will
